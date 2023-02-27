@@ -2,18 +2,17 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from './page.module.css'
-import { useEffect } from 'react'
 import { requestPermission } from './firebase'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  useEffect(()=>{
-    requestPermission();
-  },[]);
   return (
     <main className={styles.main}>
       <div className={styles.description}>
+        <button onClick={requestPermission}>
+          request permission
+        </button>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>
