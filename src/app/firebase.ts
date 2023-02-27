@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
-import * as firebase from "firebase/app";
-import { getMessaging } from "firebase/messaging/sw";
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
 import localforage from "localforage";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -19,11 +19,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
 
-export async function requestPushNotification() {
+export async function requestPermission() {
   try {
-    const messaging = getMessaging(app);
     const tokenInLocalForage = await localforage.getItem("fcm_token");
     if (tokenInLocalForage !== null) {
       return tokenInLocalForage;
@@ -32,9 +32,7 @@ export async function requestPushNotification() {
     const status = await Notification.requestPermission();
     if (status && status === "granted") {
       // Get new token from Firebase
-        const fcm_token = await messaging.getToken({
-          vapidKey: "your_web_push_certificate_key_pair",
-        });
+        const fcm_token = await getToken(messaging, { vapidKey: process.env.NEXT_PUBLIC_CLOUD_MESSAGING_KEY_PAIR });
 
         // Set token in our local storage
         if (fcm_token) {
