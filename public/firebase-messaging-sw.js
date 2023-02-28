@@ -1,7 +1,7 @@
-importScripts("https://www.gstatic.com/firebasejs/9.7.0/firebase-app.js");
-importScripts("https://www.gstatic.com/firebasejs/9.7.0/firebase-messaging.js");
+import { initializeApp } from "firebase/app";
+import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
 
-firebase.initializeApp({
+const firebaseApp = initializeApp({
     apiKey: "AIzaSyBTEDDECvB02dTj00GWLeDxUOE5k5aIGck",
     authDomain: "ios16-4pwa.firebaseapp.com",
     projectId: "ios16-4pwa",
@@ -11,15 +11,15 @@ firebase.initializeApp({
     measurementId: "G-780C37E5PD"
 });
 
-const messaging = firebase.messaging();
+const messaging = getMessaging(firebaseApp);
 
-messaging.onBackgroundMessage((payload) => {
+onBackgroundMessage(messaging, (payload) => {
   console.log('[firebase-messaging-sw.js] Received background message ', payload);
   // Customize notification here
   const notificationTitle = 'Background Message Title';
   const notificationOptions = {
     body: 'Background Message body.',
-    icon: '/firebase-logo.png'
+    icon: '/icon-192x192.png'
   };
 
   self.registration.showNotification(notificationTitle,
