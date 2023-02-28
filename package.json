@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "tsc src/firebase-messaging-sw.ts --allowSyntheticDefaultImports true --moduleResolution node --module amd --outfile public/firebase-messaging-sw.js && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

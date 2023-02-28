@@ -1,4 +1,4 @@
-import { app } from "./firebase"
+import { app } from "./app/firebase"
 import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
 
 interface MyWindow extends Window  {
