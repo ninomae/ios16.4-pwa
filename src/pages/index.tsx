@@ -2,12 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
+import copy from 'copy-to-clipboard';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  const [token, setToken] = useState("");
 
   useEffect(() =>{
 
@@ -42,7 +45,11 @@ export default function Home() {
           }
       }
     }
-    getFcmToken();
+    getFcmToken().then(t => {
+      if(t !== undefined){
+        setToken(t);
+      }
+    });
   },[]);
   return (
     <>
@@ -54,8 +61,12 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
+          <button onClick={() => {
+            copy(token);
+          }}>
+          {token}
+          </button>
           <button onClick={()=> {
-              alert("fuga");
               const firebaseConfig = {
                 apiKey: "AIzaSyBTEDDECvB02dTj00GWLeDxUOE5k5aIGck",
                 authDomain: "ios16-4pwa.firebaseapp.com",
