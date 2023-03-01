@@ -20,13 +20,14 @@ var sendMessage = new SendMessageRequest()
     Message = new Message()
     {
         Topic = "hoge",
+        Token = "",
         Notification = new Notification()
         {
-            Title = "Hello!"
-        },
-        Webpush = new WebpushConfig()
-        {
-
+            Title = "Hello!",
+            Body = "body",
         }
     }
 };
+
+var send = service.Projects.Messages.Send(sendMessage, "");
+var response = await send.ExecuteAsync();
