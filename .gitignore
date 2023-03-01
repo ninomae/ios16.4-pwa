@@ -81,3 +81,5 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+
+service-account-file.json
