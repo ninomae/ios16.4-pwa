@@ -10,8 +10,8 @@ Console.WriteLine(secret.APIKey);
 Console.WriteLine("Hello, World!");
 var initializer = new BaseClientService.Initializer
 {
-    ApiKey = "<MY_API_KEY>",
-    ApplicationName = "<MY_PROJECT_NAME>"
+    ApiKey = secret.APIKey,
+    ApplicationName = secret.ProjectName
 };
 var service = new FirebaseCloudMessagingService(initializer);
 var projectsResource = new ProjectsResource(service);
@@ -29,5 +29,6 @@ var sendMessage = new SendMessageRequest()
     }
 };
 
-var send = service.Projects.Messages.Send(sendMessage, "");
+var send = service.Projects.Messages.Send(sendMessage, $"projects/{secret.ProjectName}");
 var response = await send.ExecuteAsync();
+Console.WriteLine(response);
