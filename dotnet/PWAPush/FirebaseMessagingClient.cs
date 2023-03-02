@@ -16,6 +16,12 @@ public class FirebaseMessagingClient
         });
     }
 
+    /// <summary>
+    /// PUSH通知を送信します
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="title"></param>
+    /// <param name="body"></param>
     public async Task SendAsync(string token, string title, string body)
     {
         var message = new Message
@@ -27,7 +33,27 @@ public class FirebaseMessagingClient
             },
             Token = token
         };
-        var result = await FirebaseMessaging.DefaultInstance.SendAsync(message);
-        Console.WriteLine(result);
+        await FirebaseMessaging.DefaultInstance.SendAsync(message);
+    }
+    
+    /// <summary>
+    /// 複数人にPUSH通知を送信します
+    /// </summary>
+    /// <param name="tokens"></param>
+    /// <param name="title"></param>
+    /// <param name="body"></param>
+    public async Task SendMulticastAsync(string[] tokens, string title, string body)
+    {
+        var message = new MulticastMessage
+        {
+            Notification = new Notification
+            {
+                Title = title,
+                Body = body,
+                ImageUrl = "",
+            },
+            Tokens = tokens
+        };
+        await FirebaseMessaging.DefaultInstance.SendMulticastAsync(message);
     }
 }
