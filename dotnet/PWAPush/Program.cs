@@ -3,13 +3,11 @@
 using CommandLine;
 using PWAPush;
 
-Parser.Default.ParseArguments<Options>(args)
+await Parser.Default.ParseArguments<Options>(args)
     .WithParsedAsync(async o =>
     {
-        Console.WriteLine("fuga");
         var firebaseMessagingClient = new FirebaseMessagingClient();
         await firebaseMessagingClient.SendAsync(o.Token, "title", "bodyだよ");
-        Console.WriteLine("hoge");
     });
 
 
