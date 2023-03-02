@@ -22,14 +22,15 @@ public class FirebaseMessagingClient
     /// <param name="token"></param>
     /// <param name="title"></param>
     /// <param name="body"></param>
-    public async Task SendAsync(string token, string title, string body)
+    public async Task SendAsync(string token, string title, string body, string imageUri = null)
     {
         var message = new Message
         {
             Notification = new Notification
             {
                 Title = title,
-                Body = body
+                Body = body,
+                ImageUrl = imageUri
             },
             Token = token
         };
@@ -42,7 +43,7 @@ public class FirebaseMessagingClient
     /// <param name="tokens"></param>
     /// <param name="title"></param>
     /// <param name="body"></param>
-    public async Task SendMulticastAsync(string[] tokens, string title, string body)
+    public async Task SendMulticastAsync(string[] tokens, string title, string body, string imageUri = null)
     {
         var message = new MulticastMessage
         {
@@ -50,7 +51,7 @@ public class FirebaseMessagingClient
             {
                 Title = title,
                 Body = body,
-                ImageUrl = "",
+                ImageUrl = imageUri,
             },
             Tokens = tokens
         };
