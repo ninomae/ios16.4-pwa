@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using FirebaseAdmin;
 using FirebaseAdmin.Messaging;
 using Google.Apis.Auth.OAuth2;
@@ -32,8 +33,35 @@ public class FirebaseMessagingClient
                 Body = body,
                 ImageUrl = imageUri
             },
-            Token = token
+            Token = token,
+            Webpush = new WebpushConfig()
+            {
+                Headers = new Dictionary<string, string>()
+                {
+                    {"image", imageUri}
+                }
+            },
+            Android = new AndroidConfig()
+            {
+                Notification  = new AndroidNotification()
+                {
+                    ImageUrl = imageUri
+                }
+            },
+            Apns = new ApnsConfig()
+            {
+                Aps = new Aps()
+                {
+                    Badge = 2,
+                    MutableContent = true
+                },
+                FcmOptions = new ApnsFcmOptions()
+                {
+                    ImageUrl = imageUri
+                }
+            }
         };
+
         await FirebaseMessaging.DefaultInstance.SendAsync(message);
     }
     
@@ -53,7 +81,14 @@ public class FirebaseMessagingClient
                 Body = body,
                 ImageUrl = imageUri,
             },
-            Tokens = tokens
+            Tokens = tokens,
+            Webpush =
+            {
+                Headers = new Dictionary<string, string>()
+                {
+                    {"image", imageUri}
+                }
+            }
         };
         await FirebaseMessaging.DefaultInstance.SendMulticastAsync(message);
     }
