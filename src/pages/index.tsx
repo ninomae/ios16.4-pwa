@@ -1,16 +1,13 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import copy from "copy-to-clipboard";
 import { isPWA } from "@/utils/isPWA";
-import { useAddToHomeScreenPrompt } from "@/utils/useAddToHomeScreen";
+import { BeforeInstallPromptButton } from "@/components/beforeInstallPromptButton";
 export default function Home() {
   const [token, setToken] = useState("");
-  const [_, promptToInstall] = useAddToHomeScreenPrompt();
 
   useEffect(() => {
     const firebaseConfig = {
@@ -114,7 +111,7 @@ export default function Home() {
         </button>
         <div>{isPWA() ? "PWA環境" : "NOT PWA 環境"}</div>
         Hello! Wanna add to homescreen?
-        <button onClick={promptToInstall}>Add to homescreen</button>
+        <BeforeInstallPromptButton />
       </main>
     </>
   );
