@@ -7,10 +7,10 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 import copy from "copy-to-clipboard";
 import { isPWA } from "@/utils/isPWA";
-const inter = Inter({ subsets: ["latin"] });
-
+import { useAddToHomeScreenPrompt } from "@/utils/useAddToHomeScreen";
 export default function Home() {
   const [token, setToken] = useState("");
+  const [_, promptToInstall] = useAddToHomeScreenPrompt();
 
   useEffect(() => {
     const firebaseConfig = {
@@ -113,6 +113,8 @@ export default function Home() {
           notification
         </button>
         <div>{isPWA() ? "PWA環境" : "NOT PWA 環境"}</div>
+        Hello! Wanna add to homescreen?
+        <button onClick={promptToInstall}>Add to homescreen</button>
       </main>
     </>
   );
